@@ -1,0 +1,34 @@
+# Configuration par défaut pour Dual AI Orchestrator
+
+app:
+  name: "Dual AI Orchestrator"
+  version: "1.0.0"
+  debug: false
+
+ai:
+  claude:
+    command: "claude"
+    timeout: 120
+    enabled: true
+  gemini:
+    command: "gemini"
+    timeout: 120
+    enabled: true
+    args: ["--yolo"]
+
+ui:
+  theme: "modern"
+  show_spinners: true
+  max_debate_rounds: 3
+  auto_save_solutions: true
+  
+logging:
+  level: "INFO"
+  file: "~/.dual-ai/logs/app.log"
+  max_size: "10MB"
+  backup_count: 5
+
+paths:
+  config_dir: "~/.dual-ai"
+  solutions_dir: "~/.dual-ai/solutions"
+  cache_dir: "~/.dual-ai/cache"

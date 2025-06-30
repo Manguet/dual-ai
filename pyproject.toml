@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dual-ai-orchestrator"
+version = "1.0.0"
+description = "Un orchestrateur intelligent qui unifie Claude Code et Gemini Code"
+readme = "README.md"
+authors = [
+    {name = "Dual AI Contributors", email = "contact@dual-ai.dev"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "rich>=13.0.0",
+    "pyyaml>=6.0",
+    "requests>=2.28.0",
+    "click>=8.1.0",
+    "colorama>=0.4.6",
+    "pathlib>=1.0.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/dual-ai-orchestrator"
+Documentation = "https://dual-ai.dev/docs"
+Repository = "https://github.com/yourusername/dual-ai-orchestrator.git"
+Issues = "https://github.com/yourusername/dual-ai-orchestrator/issues"
+
+[project.scripts]
+dual-ai = "dual_ai.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/tests/*", "*/test_*"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

@@ -1,0 +1,292 @@
+# Configuration avancée pour Dual AI Orchestrator
+# Copiez ce fichier vers ~/.dual-ai/config.yaml et adaptez selon vos besoins
+
+# Configuration de l'application
+app:
+  name: "Dual AI Orchestrator"
+  version: "1.0.0"
+  debug: true  # Active les logs détaillés
+
+# Configuration des IA
+ai:
+  claude:
+    command: "claude"
+    timeout: 180  # 3 minutes pour les tâches complexes
+    enabled: true
+    args:
+      - "--model"
+      - "claude-3-sonnet"  # Modèle spécifique
+      - "--temperature"
+      - "0.7"
+    env:
+      # Exemple de configuration d'environnement
+      ANTHROPIC_LOG_LEVEL: "INFO"
+      
+  gemini:
+    command: "gemini"
+    timeout: 180
+    enabled: true
+    args:
+      - "--model"
+      - "gemini-pro"
+      - "--temperature"
+      - "0.8"
+    env:
+      GOOGLE_LOG_LEVEL: "INFO"
+
+# Interface utilisateur avancée
+ui:
+  theme: "modern"
+  show_spinners: true
+  max_debate_rounds: 5  # Plus de rounds pour projets complexes
+  auto_save_solutions: true
+  prompt_style: "numbered"
+  
+  # Couleurs personnalisées
+  colors:
+    claude: "bright_cyan"
+    gemini: "bright_red"
+    success: "bright_green"
+    error: "bright_red"
+    warning: "bright_yellow"
+    info: "bright_blue"
+
+# Configuration de logging avancée
+logging:
+  level: "DEBUG"  # Logs très détaillés
+  file: "~/.dual-ai/logs/dual-ai.log"
+  max_size: "50MB"  # Fichiers de log plus gros
+  backup_count: 10  # Plus de backups
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s"
+  
+  # Logs séparés par composant
+  loggers:
+    dual_ai.orchestrator:
+      level: "DEBUG"
+      file: "~/.dual-ai/logs/orchestrator.log"
+    dual_ai.interface:
+      level: "INFO"
+      file: "~/.dual-ai/logs/interface.log"
+
+# Chemins personnalisés
+paths:
+  config_dir: "~/.dual-ai"
+  solutions_dir: "~/Documents/dual-ai-solutions"  # Répertoire personnalisé
+  cache_dir: "/tmp/dual-ai-cache"  # Cache sur disque rapide
+  temp_dir: "/tmp/dual-ai-temp"
+
+# Configuration avancée de l'orchestration
+orchestration:
+  # Mots-clés de consensus étendus
+  consensus_keywords:
+    - "consensus"
+    - "d'accord"
+    - "agree"
+    - "parfait"
+    - "excellent"
+    - "je suis d'accord"
+    - "c'est une bonne approche"
+    - "CONSENSUS"
+    - "AGREE"
+    - "PARFAIT"
+    - "EXCELLENT"
+    - "approved"
+    - "sounds good"
+    - "looks great"
+    
+  # Mots-clés d'objection étendus
+  objection_keywords:
+    - "mais"
+    - "cependant"
+    - "toutefois"
+    - "néanmoins"
+    - "je suggère"
+    - "alternative"
+    - "plutôt"
+    - "instead"
+    - "however"
+    - "but"
+    - "alternatively"
+    - "i suggest"
+    - "what about"
+    - "consider"
+    
+  context_length: 3000  # Plus de contexte pour projets complexes
+  retry_attempts: 5     # Plus de tentatives
+  retry_delay: 3        # Délai plus long entre tentatives
+
+# Configuration de performance
+performance:
+  cache_enabled: true
+  cache_ttl: 7200  # 2 heures de cache
+  concurrent_requests: false  # Séquentiel pour plus de stabilité
+  request_delay: 2  # Délai entre requêtes pour éviter le rate limiting
+  
+  # Limites de taille
+  max_prompt_length: 8000
+  max_response_length: 16000
+  max_context_rounds: 10
+
+# Configuration de sécurité
+security:
+  # Masquer les clés API dans les logs
+  mask_api_keys: true
+  
+  # Fichiers autorisés pour l'écriture
+  allowed_write_paths:
+    - "~/.dual-ai/"
+    - "~/Documents/dual-ai-solutions/"
+    - "/tmp/dual-ai-*"
+  
+  # Validation des entrées
+  input_validation:
+    max_length: 10000
+    forbidden_patterns:
+      - "rm -rf"
+      - "format c:"
+      - "del /f /s /q"
+
+# Intégrations externes
+integrations:
+  # Git pour le versioning des solutions
+  git:
+    enabled: true
+    auto_commit: false
+    commit_message_template: "feat: dual-ai solution for {request_summary}"
+  
+  # Webhook pour notifications
+  webhook:
+    enabled: false
+    url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+    events:
+      - "solution_generated"
+      - "consensus_reached"
+      - "error_occurred"
+
+# Profils pour différents contextes
+profiles:
+  development:
+    ai:
+      claude:
+        timeout: 300
+      gemini:
+        timeout: 300
+    ui:
+      max_debate_rounds: 6
+    logging:
+      level: "DEBUG"
+      
+  production:
+    ai:
+      claude:
+        timeout: 120
+      gemini:
+        timeout: 120
+    ui:
+      max_debate_rounds: 3
+      show_spinners: false
+    logging:
+      level: "WARNING"
+      
+  research:
+    ai:
+      claude:
+        args:
+          - "--temperature"
+          - "0.9"  # Plus créatif
+      gemini:
+        args:
+          - "--temperature"
+          - "0.9"
+    ui:
+      max_debate_rounds: 8
+    orchestration:
+      context_length: 5000
+
+# Métriques et monitoring
+metrics:
+  enabled: true
+  
+  # Collecte de métriques
+  collect:
+    response_times: true
+    success_rates: true
+    consensus_rates: true
+    token_usage: true
+  
+  # Export des métriques
+  export:
+    format: "json"
+    file: "~/.dual-ai/metrics/metrics.json"
+    interval: 3600  # Toutes les heures
+
+# Configuration spécifique par type de projet
+project_types:
+  web_development:
+    ai:
+      claude:
+        args:
+          - "--context"
+          - "web-development"
+      gemini:
+        args:
+          - "--domain"
+          - "frontend"
+    orchestration:
+      consensus_keywords:
+        - "web standards compliant"
+        - "responsive design"
+        - "accessibility ready"
+        
+  data_science:
+    ai:
+      claude:
+        timeout: 300  # Plus de temps pour l'analyse
+        args:
+          - "--context"
+          - "data-science"
+      gemini:
+        timeout: 300
+        args:
+          - "--domain"
+          - "analytics"
+    ui:
+      max_debate_rounds: 4
+
+# Règles d'automatisation
+automation:
+  # Auto-implémentation si consensus fort
+  auto_implement:
+    enabled: false
+    confidence_threshold: 0.9
+    
+  # Sauvegarde automatique
+  auto_save:
+    enabled: true
+    conditions:
+      - "consensus_reached"
+      - "solution_complete"
+    
+  # Nettoyage automatique
+  auto_cleanup:
+    enabled: true
+    schedule: "daily"
+    targets:
+      - "cache_files"
+      - "old_logs"
+      - "temp_files"
+
+# Configuration des hooks/plugins
+hooks:
+  pre_request:
+    - "validate_input"
+    - "check_rate_limits"
+    
+  post_consensus:
+    - "log_consensus"
+    - "notify_webhook"
+    
+  post_implementation:
+    - "save_solution"
+    - "update_metrics"
+    - "cleanup_temp_files"

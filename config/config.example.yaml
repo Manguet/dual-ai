@@ -1,0 +1,48 @@
+# Exemple de configuration pour Dual AI Orchestrator
+# Copiez ce fichier vers ~/.dual-ai/config.yaml et personnalisez selon vos besoins
+
+# Configuration de l'application
+app:
+  name: "Dual AI Orchestrator"
+  version: "1.0.0"
+  debug: false  # Activer pour des logs détaillés
+
+# Configuration des IA
+ai:
+  claude:
+    command: "claude"  # Commande pour lancer Claude Code
+    timeout: 120       # Timeout en secondes
+    enabled: true      # Désactiver si Claude n'est pas disponible
+  gemini:
+    command: "gemini"  # Commande pour lancer Gemini Code
+    timeout: 120       # Timeout en secondes
+    enabled: true      # Désactiver si Gemini n'est pas disponible
+
+# Configuration de l'interface utilisateur
+ui:
+  theme: "modern"              # Theme d'affichage
+  show_spinners: true          # Afficher les animations de chargement
+  max_debate_rounds: 3         # Nombre maximum de rounds de débat
+  auto_save_solutions: true    # Sauvegarder automatiquement les solutions
+
+# Configuration des logs
+logging:
+  level: "INFO"                    # Niveau de log: DEBUG, INFO, WARNING, ERROR
+  file: "~/.dual-ai/logs/app.log"  # Fichier de log
+  max_size: "10MB"                 # Taille maximale avant rotation
+  backup_count: 5                  # Nombre de fichiers de backup
+
+# Chemins de l'application
+paths:
+  config_dir: "~/.dual-ai"            # Répertoire de configuration
+  solutions_dir: "~/.dual-ai/solutions" # Répertoire des solutions sauvegardées
+  cache_dir: "~/.dual-ai/cache"       # Répertoire de cache
+
+# Variables d'environnement supportées:
+# - DUAL_AI_DEBUG=true              Active le mode debug
+# - DUAL_AI_CLAUDE_COMMAND=claude   Commande Claude personnalisée
+# - DUAL_AI_GEMINI_COMMAND=gemini   Commande Gemini personnalisée
+# - DUAL_AI_CLAUDE_TIMEOUT=180      Timeout Claude en secondes
+# - DUAL_AI_GEMINI_TIMEOUT=180      Timeout Gemini en secondes
+# - DUAL_AI_MAX_ROUNDS=5            Nombre max de rounds de débat
+# - DUAL_AI_LOG_LEVEL=DEBUG         Niveau de log
