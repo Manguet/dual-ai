@@ -41,11 +41,11 @@ Choix › _
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/yourusername/dual-ai-orchestrator
+git clone https://github.com/Manguet/dual-ai
 cd dual-ai-orchestrator
 
 # 2. Lancer l'installateur interactif
-python install.py
+python3 install_simple.py
 
 # 3. C'est tout ! Lancez l'orchestrateur
 dual-ai
@@ -94,7 +94,7 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 - 📧 Email : support@dual-ai.dev
 - 💬 Discord : [Rejoindre le serveur](https://discord.gg/dual-ai)
-- 🐛 Issues : [GitHub Issues](https://github.com/yourusername/dual-ai-orchestrator/issues)
+- 🐛 Issues : [GitHub Issues](https://github.com/Manguet/dual-ai/issues)
 
 ---
 
